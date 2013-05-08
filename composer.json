@@ -19,7 +19,7 @@
     },
     "extra": {
         "installer-paths": {
-            "../": ["rhym/cake-strap", "vendor/package"]
+            "./": ["rhym/cake-strap", "vendor/package"]
         }
     }
 }
