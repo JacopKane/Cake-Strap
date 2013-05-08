@@ -16,10 +16,5 @@
     "require": {
         "php"                     : ">=5.2.0",
         "composer/installers"     : "*"
-    },
-    "extra": {
-        "installer-paths": {
-            "../": ["rhym/cake-strap", "vendor/package"]
-        }
     }
 }
