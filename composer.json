@@ -1,0 +1,25 @@
+{
+    "name"        : "rhym/cake-strap",
+    "type"        : "cakephp-plugin",
+    "description" : "CakePHP Plugin includes Twitter Bootstrap Theme & Template",
+    "authors"     : [
+        {
+            "name": "Ryan Potter",
+            "email": "contact@ryanpotter.co.nz"
+        },
+        {
+            "name": "Furkan Tunalı",
+            "email": "mail@furkantunali.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php"                     : ">=5.2.0",
+        "composer/installers"     : "*"
+    },
+    "extra": {
+        "installer-paths": {
+            "./": ["rhym/cake-strap", "vendor/package"]
+        }
+    }
+}
