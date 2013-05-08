@@ -19,7 +19,7 @@
     },
     "extra": {
         "installer-paths": {
-            "{$name}/": ["vendor/package"]
+            "../": ["vendor/package"]
         }
     }
 }
