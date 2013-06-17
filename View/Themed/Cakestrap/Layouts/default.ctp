@@ -16,7 +16,6 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-$cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -24,8 +23,10 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 	<head>
 		<?php echo $this->Html->charset(); ?>
 		<title>
-			<?php echo $cakeDescription ?>:
-			<?php echo $title_for_layout; ?>
+			<?php if(isset($title)) echo __($title) . ' // '; ?>
+			<?php if($this->params->prefix) echo __(Inflector::humanize($this->params->prefix)) . ' / '; ?>
+			<?php if($title_for_layout) echo __($title_for_layout) . ' / '; ?>
+			<?php if(isset($this->params->actionTitle)) echo __($this->params->actionTitle); ?>
 		</title>
 		<?php
 			echo $this->Html->meta('icon');
@@ -50,7 +51,20 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		<div id="main-container">
 		
 			<div id="header" class="container">
-				<?php echo $this->element('menu/top_menu'); ?>
+				<?php
+					$nav = array();
+					if(!empty($controllersList)) {
+						foreach($controllersList as $controller => $link) {
+							unset($link['name']);
+							$link['plugin'] = false;
+							$link['action'] = 'index';
+							$controller = $this->Html->link(__($controller), $link);
+							$nav[] = $this->params->controller === $link['controller'] ?
+								"<li class=\"active\">{$controller}</li>" : "<li>{$controller}</li>";
+						}
+					}
+					echo $this->element('menu/top_menu', compact('nav'));
+				?>
 			</div><!-- #header .container -->
 			
 			<div id="content" class="container">
@@ -74,6 +88,40 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 			</div>
 		</div><!-- .container -->
 		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('input[type="file"]').each(function() {
+					var $fileInput		= $(this).hide(),
+						relatedInput	= '#' + $(this).attr('rel'),
+						$relatedInput;
+					if(!relatedInput) return true;
+					$relatedInput = $(relatedInput);
+					if(!$relatedInput.length) return true;
+
+					$fileInput.change(function() {
+						$relatedInput.val($fileInput.val()
+							.replace('C:\\fakepath\\', ''));
+					});
+
+					$relatedInput
+						.click(function() {
+							return $fileInput.click();
+						})
+						.next('.btn-file')
+							.click(function() {
+								return $fileInput.click();
+							});
+				});
+			});
+		</script>
+		<style media="all">
+			div#page-container div h2:first-child,
+			fieldset h2
+				{ display: none; }
+
+			input[readonly], select[readonly], textarea[readonly] { cursor: default; }
+			input#ImageFakeImage { cursor: pointer; }
+		</style>
 	</body>
 
 </html>
